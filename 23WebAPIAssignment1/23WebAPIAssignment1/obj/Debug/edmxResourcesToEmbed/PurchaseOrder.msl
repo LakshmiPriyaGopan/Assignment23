@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PODbModelStoreContainer" CdmEntityContainer="PODbEntities">
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="PODbModel.Item">
+        <MappingFragment StoreEntitySet="Item">
+          <ScalarProperty Name="ItCode" ColumnName="ItCode" />
+          <ScalarProperty Name="ItDesc" ColumnName="ItDesc" />
+          <ScalarProperty Name="ItRate" ColumnName="ItRate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PoDetails">
+      <EntityTypeMapping TypeName="PODbModel.PoDetail">
+        <MappingFragment StoreEntitySet="PoDetail">
+          <ScalarProperty Name="PoNo" ColumnName="PoNo" />
+          <ScalarProperty Name="Itcode" ColumnName="Itcode" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PoMasters">
+      <EntityTypeMapping TypeName="PODbModel.PoMaster">
+        <MappingFragment StoreEntitySet="PoMaster">
+          <ScalarProperty Name="PoNo" ColumnName="PoNo" />
+          <ScalarProperty Name="PoDate" ColumnName="PoDate" />
+          <ScalarProperty Name="SuplNo" ColumnName="SuplNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Suppliers">
+      <EntityTypeMapping TypeName="PODbModel.Supplier">
+        <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="SuplNo" ColumnName="SuplNo" />
+          <ScalarProperty Name="SuplName" ColumnName="SuplName" />
+          <ScalarProperty Name="SuplAddr" ColumnName="SuplAddr" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

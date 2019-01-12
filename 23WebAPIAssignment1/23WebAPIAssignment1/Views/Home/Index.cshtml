@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h2>SupplierList</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
+ 
+<p>
+    @Html.ActionLink("Iten List", "ItemList")
+</p>
+
+<p> @*@Html.ActionLink("Supplier List", "SupplierList")*@
+    @Html.ActionLink("Add new Supplier", "AddSupplier")
+</p>
+<table id="suppliers" class="table">
+    <thead>
+
+        <tr>
+            <th>
+                Supplier Name
+            </th>
+            <th>
+                Supplier Address
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody></tbody> 
+
+</table>
+
+<script>
+
+    var uri = 'api/Suppliers';
+
+    $(document).ready(function () {
+        // Send an AJAX request
+        $.getJSON(uri)
+            .done(function (data) {
+                // On success, 'data' contains a list of suppliers.
+                $.each(data, function (key, item) {
+                    var rows = "<tr>"
+                        + "<td>" + item.SuplName + "</td>"
+                        + "<td>" + item.SuplAddr + "</td>"
+                        + "<td><a href='/Home/EditSupplier/" + item.SuplNo + "'>Edit</a></td>" 
+                        + "<td><a href='/Home/DeleteSupplier/" + item.SuplNo + "'>Delete</a></td>"     
+                    + "</tr>";
+                $('#suppliers tbody').append(rows);
+                        //$('<li>', { text: formatItem(item) }).appendTo($('#products'));
+                    });
+          });
+    });
+</script>

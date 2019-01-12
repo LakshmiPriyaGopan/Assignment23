@@ -1,0 +1,70 @@
+﻿@model _23WebAPIAssignment1.PoMaster
+
+@{
+    ViewBag.Title = "AddPurchase";
+}
+
+<h2>@ViewBag.Messag</h2>
+
+@*@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()*@
+    
+    <div class="form-horizontal">
+        <h4>PoMaster</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.PoNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PoNo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PoNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PoDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PoDate, new { htmlAttributes = new { @class = "datepicker", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.PoDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SuplNo, "SuplNo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SuplNo", Model.Suppliers, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SuplNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" id="Create" name="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+@*}*@
+
+<div>
+    @Html.ActionLink("Purchase Details", "PurchaseDetailList")|
+    @Html.ActionLink("Back to Purchase List", "PurchaseList")
+</div>
+<script>
+    $(document).ready(function () {
+        $("body").on("click", "#Create", function () {
+            var purchase = {};
+            purchase.PoNo = $("#PoNo").val();
+            purchase.PoDate = $("#PoDate").val();
+            purchase.SuplNo = $("#SuplNo").val();
+            $.ajax({
+                type: "POST",
+                url: "/api/PoMasters",
+                data: JSON.stringify(purchase),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) { alert("added successfully"); }
+            });
+        });
+    });
+</script> 

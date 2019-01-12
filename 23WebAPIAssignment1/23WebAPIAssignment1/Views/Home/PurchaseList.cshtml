@@ -1,0 +1,39 @@
+﻿@model IEnumerable<_23WebAPIAssignment1.PoMaster>
+
+@{
+    ViewBag.Title = "PurchaseList";
+}
+
+<h2>PurchaseList</h2>
+
+<p>
+    @Html.ActionLink("Add Purchase", "AddPurchase")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PoDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supplier.SuplName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PoDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier.SuplName)  
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditPurchase", new { id = item.PoNo }  ) |
+            @Html.ActionLink("Details", "DetailsPurchase", new { id = item.PoNo }) |
+            @Html.ActionLink("Delete", "DeletePurchase", new { id = item.PoNo })  
+        </td>
+    </tr>
+}
+
+</table>

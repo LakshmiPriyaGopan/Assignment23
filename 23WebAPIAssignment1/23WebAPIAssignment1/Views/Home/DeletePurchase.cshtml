@@ -1,0 +1,61 @@
+﻿@model _23WebAPIAssignment1.PoMaster
+
+@{
+    ViewBag.Title = "DeletePurchase";
+}
+
+<h2>DeletePurchase</h2>
+
+<h3>Are you sure you want to delete this purchase?</h3>
+<div> 
+    <hr />
+    <hr />
+        @Html.HiddenFor(model => model.PoNo)
+        @Html.HiddenFor(model => model.SuplNo)
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PoDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PoDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier.SuplName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.SuplName)
+        </dd>
+
+    </dl>
+
+    @*@using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()*@
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" id="Delete" name="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to Purchase List", "Index")
+        </div>
+    @*}*@
+</div>
+<script>
+
+
+    $(document).ready(function () {
+        $("body").on("click", "#Delete", function () {
+            var supllier = {};
+            supllier.PoNo = $("#PoNo").val();
+            supllier.PoDate = $("#PoDate").val();
+            supllier.SuplNo = $("#SuplNo").val();
+            $.ajax({
+                type: "DELETE",
+                url: "/api/PoMasters/" + $("#PoNo").val(),
+                data: JSON.stringify(supllier),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            });
+        });
+    });
+</script>

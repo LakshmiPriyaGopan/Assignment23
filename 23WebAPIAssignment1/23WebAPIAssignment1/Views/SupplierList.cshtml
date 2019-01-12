@@ -1,0 +1,65 @@
+﻿@model IEnumerable<_23WebAPIAssignment1.Supplier>
+
+@{
+    ViewBag.Title = "SupplierList";
+}
+
+<h2>SupplierList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="suppliers" class="table">
+    <thead>
+
+        <tr>
+            <th>
+                Supplier Name
+            </th>
+            <th>
+                Supplier Address
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SuplName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SuplAddr)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SuplNo }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SuplNo }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SuplNo })
+        </td>
+    </tr>
+}
+
+</table>
+
+@*<script>
+    var uri = 'api/Suppliers';
+
+    $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri)
+          .done(function (data) {
+            // On success, 'data' contains a list of suppliers.
+            $.each(data, function (key, item) { 
+                var rows = "<tr>"
+                    + "<td>" + item.SuplName + "</td>"
+                    + "<td>" + item.SuplAddr + "</td>" 
+                    + "</tr>";
+                $('#suppliers tbody').append(rows);
+              //$('<li>', { text: formatItem(item) }).appendTo($('#products'));
+            });
+          });
+    });
+  </script>*@

@@ -1,0 +1,67 @@
+﻿@model _23WebAPIAssignment1.PoMaster
+
+@{
+    ViewBag.Title = "DetailsPurchase";
+}
+
+<h2>DetailsPurchase</h2>
+
+<div>
+    <h4>PoMaster</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PoDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PoDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier.SuplName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.SuplName)
+        </dd>
+
+    </dl>
+    <table class="table">
+        <tr><td colspan="5">@Html.ActionLink("Add Purchase Details", "AddPurhcaseDetail", new { id =Model.PoNo}) </td></tr>
+        <tr>
+            <th> Item Code  </th>
+            <th>  Item Description</th>
+            <th>Quantity</th>
+            <th>Rate</th>
+        </tr>
+
+        @foreach (var item in Model.PoDetails)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Itcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.ItDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item.ItRate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditPurhcaseDetail", new { id = item.PoNo ,itcode = item.Itcode }) |
+                    @*@Html.ActionLink("Details", "Details", new { id = item.PoNo }) |*@
+                    @Html.ActionLink("Delete", "DeletePurhcaseDetail", new { id = item.PoNo, itcode = item.Itcode })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditPurchase", new { id = Model.PoNo }) |
+    @Html.ActionLink("Back to Purchase List", "PurchaseList")
+</p>

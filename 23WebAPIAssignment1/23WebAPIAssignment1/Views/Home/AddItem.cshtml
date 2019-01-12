@@ -1,0 +1,68 @@
+﻿@model _23WebAPIAssignment1.Item
+
+@{
+    ViewBag.Title = "AddItem";
+}
+
+<h2>@ViewBag.Messag</h2>
+
+@*@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()*@
+    
+    <div class="form-horizontal">
+        <h4>Item</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ItCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ItCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ItDesc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ItDesc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItRate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ItRate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ItRate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" id="Create"  name ="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+@*}  *@
+<div>
+    @Html.ActionLink("Back to Item List", "ItemList")
+</div>
+<script>
+    $(document).ready(function () {
+        $("body").on("click", "#Create", function () {
+            var item = {};
+            item.ItCode = $("#ItCode").val(); 
+            item.ItDesc = $("#ItDesc").val();  
+            item.ItRate = $("#ItRate").val(); 
+            $.ajax({
+                type: "POST",
+                url: "/api/Items",
+                data: JSON.stringify(item),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) { alert("added successfully"); }
+            });
+        });
+    });
+</script> 

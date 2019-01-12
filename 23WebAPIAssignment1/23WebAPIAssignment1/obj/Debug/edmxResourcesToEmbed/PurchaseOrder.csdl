@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PODbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItCode" />
+    </Key>
+    <Property Name="ItCode" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="ItDesc" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ItRate" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="PoDetails" Relationship="Self.FK__PoDetail__Itcode__173876EA" FromRole="Item" ToRole="PoDetail" />
+  </EntityType>
+  <EntityType Name="PoDetail">
+    <Key>
+      <PropertyRef Name="PoNo" />
+      <PropertyRef Name="Itcode" />
+    </Key>
+    <Property Name="PoNo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Itcode" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Qty" Type="Int32" />
+    <NavigationProperty Name="Item" Relationship="Self.FK__PoDetail__Itcode__173876EA" FromRole="PoDetail" ToRole="Item" />
+    <NavigationProperty Name="PoMaster" Relationship="Self.FK__PoDetail__PoNo__182C9B23" FromRole="PoDetail" ToRole="PoMaster" />
+    <NavigationProperty Name="PoDetail1" Relationship="Self.FK_PoDetail_PoDetail" FromRole="PoDetail" ToRole="PoDetail1" />
+    <NavigationProperty Name="PoDetail2" Relationship="Self.FK_PoDetail_PoDetail" FromRole="PoDetail1" ToRole="PoDetail" />
+  </EntityType>
+  <EntityType Name="PoMaster">
+    <Key>
+      <PropertyRef Name="PoNo" />
+    </Key>
+    <Property Name="PoNo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="PoDate" Precision="3" Type="DateTime" />
+    <Property Name="SuplNo" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" Type="String" />
+    <NavigationProperty Name="PoDetails" Relationship="Self.FK__PoDetail__PoNo__182C9B23" FromRole="PoMaster" ToRole="PoDetail" />
+    <NavigationProperty Name="Supplier" Relationship="Self.FK_PoMaster_Supplier" FromRole="PoMaster" ToRole="Supplier" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="SuplNo" />
+    </Key>
+    <Property Name="SuplNo" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="SuplName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SuplAddr" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PoMasters" Relationship="Self.FK_PoMaster_Supplier" FromRole="Supplier" ToRole="PoMaster" />
+  </EntityType>
+  <Association Name="FK__PoDetail__Itcode__173876EA">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="PoDetail" Type="Self.PoDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ItCode" />
+      </Principal>
+      <Dependent Role="PoDetail">
+        <PropertyRef Name="Itcode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PoDetail__PoNo__182C9B23">
+    <End Role="PoMaster" Type="Self.PoMaster" Multiplicity="1" />
+    <End Role="PoDetail" Type="Self.PoDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PoMaster">
+        <PropertyRef Name="PoNo" />
+      </Principal>
+      <Dependent Role="PoDetail">
+        <PropertyRef Name="PoNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PoDetail_PoDetail">
+    <End Role="PoDetail" Type="Self.PoDetail" Multiplicity="1" />
+    <End Role="PoDetail1" Type="Self.PoDetail" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PoDetail">
+        <PropertyRef Name="PoNo" />
+        <PropertyRef Name="Itcode" />
+      </Principal>
+      <Dependent Role="PoDetail1">
+        <PropertyRef Name="PoNo" />
+        <PropertyRef Name="Itcode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PoMaster_Supplier">
+    <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+    <End Role="PoMaster" Type="Self.PoMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="SuplNo" />
+      </Principal>
+      <Dependent Role="PoMaster">
+        <PropertyRef Name="SuplNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PODbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="PoDetails" EntityType="Self.PoDetail" />
+    <EntitySet Name="PoMasters" EntityType="Self.PoMaster" />
+    <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+    <AssociationSet Name="FK__PoDetail__Itcode__173876EA" Association="Self.FK__PoDetail__Itcode__173876EA">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="PoDetail" EntitySet="PoDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PoDetail__PoNo__182C9B23" Association="Self.FK__PoDetail__PoNo__182C9B23">
+      <End Role="PoMaster" EntitySet="PoMasters" />
+      <End Role="PoDetail" EntitySet="PoDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PoDetail_PoDetail" Association="Self.FK_PoDetail_PoDetail">
+      <End Role="PoDetail" EntitySet="PoDetails" />
+      <End Role="PoDetail1" EntitySet="PoDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PoMaster_Supplier" Association="Self.FK_PoMaster_Supplier">
+      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="PoMaster" EntitySet="PoMasters" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<_23WebAPIAssignment1.Item>
+
+@{
+    ViewBag.Title = "ItemList";
+}
+
+<h2>ItemList</h2>
+
+<p>
+    @Html.ActionLink("Add New Item", "AddItem")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ItDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItRate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItRate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditItem", new { id=item.ItCode }) |
+            
+            @Html.ActionLink("Delete", "DeleteItem", new { id=item.ItCode })
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Back to Supplier List", "Index")
+</div>

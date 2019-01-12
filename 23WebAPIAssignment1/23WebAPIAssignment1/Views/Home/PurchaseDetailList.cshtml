@@ -1,0 +1,106 @@
+﻿@*@model IEnumerable<_23WebAPIAssignment1.PoDetail>
+
+@{
+    ViewBag.Title = "PurchaseDetailList";
+}
+
+<h2>PurchaseDetailList</h2>
+
+<p>
+   @Html.ActionLink("Add Purchase Details", "AddPurhcaseDetail", new { id = @ViewBag.PoNo })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Qty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.ItDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PoMaster.SuplNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PoDetail1.PoNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PoDetail2.PoNo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Qty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.ItDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PoMaster.SuplNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PoDetail1.PoNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PoDetail2.PoNo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditPurhcaseDetail", new { id = item.PoNo, itcode = item.Itcode }) | 
+            @Html.ActionLink("Delete", "DeletePurhcaseDetail", new { id = item.PoNo, itcode = item.Itcode })
+        </td>
+    </tr>
+}
+
+</table>
+
+<p> 
+    @Html.ActionLink("Back to Purchase List", "PurchaseList")
+</p>*@
+@model _23WebAPIAssignment1.PoMaster
+
+@{
+    ViewBag.Title = "PurchaseDetailList";
+}
+
+<h2>PurchaseDetailList</h2>
+
+<table class="table">
+    <tr><td colspan="5">@Html.ActionLink("Add Purchase Details", "AddPurhcaseDetail", new { id = Model.PoNo }) </td></tr>
+    <tr>
+        <th> Item Code  </th>
+        <th>  Item Description</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+    </tr>
+
+    @foreach (var item in Model.PoDetails)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Itcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.ItDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.ItRate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditPurhcaseDetail", new { id = item.PoNo, itcode = item.Itcode }) |
+                @*@Html.ActionLink("Details", "Details", new { id = item.PoNo }) |*@
+                @Html.ActionLink("Delete", "DeletePurhcaseDetail", new { id = item.PoNo, itcode = item.Itcode })
+            </td>
+        </tr>
+    }
+
+</table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditPurchase", new { id = Model.PoNo }) |
+    @Html.ActionLink("Back to Purchase List", "PurchaseList")
+</p>

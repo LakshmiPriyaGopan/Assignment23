@@ -1,0 +1,63 @@
+﻿@model _23WebAPIAssignment1.Supplier
+
+@{
+    ViewBag.Title = "EditSupplier";
+}
+
+<h2>EditSupplier</h2>
+
+ 
+    <div class="form-horizontal">
+        <h4>Supplier</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.SuplNo)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SuplName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SuplName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SuplName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SuplAddr, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SuplAddr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SuplAddr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="Save" name="Save" type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+ 
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+     
+
+    $(document).ready(function () { 
+        $("body").on("click", "#Save", function () {
+            var supllier = {}; 
+            supllier.SuplNo = $("#SuplNo").val();// row.find(".SuplNo").find("span").html();
+            supllier.SuplName = $("#SuplName").val();// row.find(".SuplName").find("span").html();
+            supllier.SuplAddr = $("#SuplAddr").val();// row.find(".SuplAddr").find("span").html();
+            $.ajax({
+                type: "PUT",
+                url: "/api/Suppliers/" + $("#SuplNo").val(),
+                data: JSON.stringify(supllier),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) { alert("updated successfully"); }
+            });
+        });
+    });
+</script>

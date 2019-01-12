@@ -1,0 +1,80 @@
+﻿@model _23WebAPIAssignment1.PoDetail
+
+@{
+    ViewBag.Title = "DeletePurhcaseDetail";
+}
+
+<h2>DeletePurhcaseDetail</h2>
+
+<h3>Are you sure you want to delete this puchase detail?</h3>
+<div>
+    <h4></h4>
+    <hr />
+    @Html.HiddenFor(model => model.PoNo)
+
+    @Html.HiddenFor(model => model.Itcode)
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Qty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Qty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item.ItDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item.ItDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PoMaster.SuplNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PoMaster.SuplNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PoNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PoNo)
+        </dd>         
+
+    </dl>
+
+    @*@using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()*@
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" id="Delete" name="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to Purchase Details", "DetailsPurchase", new { id = Model.PoNo })
+        </div>
+    @*}*@
+</div>
+
+<script>
+
+
+    $(document).ready(function () {
+        $("body").on("click", "#Delete", function () {
+            var purchase = {};
+            purchase.PoNo = $("#PoNo").val();
+            purchase.PoDate = $("#Itcode").val();
+            purchase.Qty = $("#Qty").val();
+            $.ajax({
+                type: "DELETE",
+                url: "/api/PoDetails?id=" + $("#PoNo").val() + "&itcode=" + $("#Itcode").val(),
+                data: JSON.stringify(purchase),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) { alert("deleted successfully"); }
+            });
+        });
+    });
+</script>

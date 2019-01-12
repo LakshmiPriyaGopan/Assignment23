@@ -1,0 +1,60 @@
+﻿@model _23WebAPIAssignment1.Supplier
+
+@{
+    ViewBag.Title = "DeleteSupplier";
+}
+
+<h2>DeleteSupplier</h2>
+
+<h3>Are you sure you want to delete this Supplier?</h3>
+<div> 
+    <hr />
+    @Html.HiddenFor(model => model.SuplNo)
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SuplName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SuplName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SuplAddr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SuplAddr)
+        </dd>
+
+    </dl>
+
+    @*@using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()*@
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" id="Delete" name="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    @*}*@
+</div>
+<script>
+
+
+    $(document).ready(function () {
+        $("body").on("click", "#Delete", function () {
+            var supllier = {};
+            supllier.SuplNo = $("#SuplNo").val(); 
+            supllier.SuplName = $("#SuplName").val(); 
+            supllier.SuplAddr = $("#SuplAddr").val(); 
+            $.ajax({
+                type: "DELETE",
+                url: "/api/Suppliers/" + $("#SuplNo").val(),
+                data: JSON.stringify(supllier),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) { alert("deleted successfully"); }
+            });
+        });
+    });
+</script>
